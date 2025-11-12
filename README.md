@@ -54,6 +54,6 @@ O site é composto por **7 páginas interconectadas**, que abordam desde os **fu
 
 ---
 
-## 🏁 Conclusão
+## Conclusão
 
 Este projeto demonstra, de forma prática, como planejar, desenvolver, versionar e publicar aplicações web modernas, aplicando boas práticas e tecnologias atuais do mercado.
