@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos Linux - Guia Web</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Segoe+UI:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A148C;
+            --primary-light: #7B1FA2;
+            --primary-dark: #38006B;
+            --secondary: #E1BEE7;
+            --accent: #AA00FF;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --background: #FAFAFA;
+            --surface: #FFFFFF;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --border: #E0E0E0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            border-radius: 2px;
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        /* Navegação */
+        header {
+            background-color: var(--surface);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin-bottom: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-hero h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .page-hero p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+        
+        /* Conteúdo */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .content-card {
+            background-color: var(--surface);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .command-example {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .command-category {
+            margin-bottom: 2rem;
+        }
+        
+        /* Rodapé */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="logo" href="index.html">
+                    <i class="fas fa-code"></i>
+                    Guia Web
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto nav-links">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="git.html">Git</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="linux.html">Linux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="hospedagem.html">Hospedagem</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https-dns.html">HTTPS & DNS</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1><i class="fab fa-linux"></i> Comandos Linux</h1>
+                <p>Comandos essenciais do terminal para desenvolvimento</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdo -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-header">
+                        <h2>Comandos Básicos do Linux</h2>
+                    </div>
+                    
+                    <div class="content-card">
+                        <p>Aqui estão alguns comandos básicos do Linux que são essenciais para trabalhar com Git Bash e desenvolvimento web:</p>
+                        
+                        <div class="command-category">
+                            <h3>Navegação entre Pastas</h3>
+                            <div class="command-example">
+                                <strong>cd nome_da_pasta</strong> – entra em uma pasta
+                            </div>
+                            <div class="command-example">
+                                <strong>cd ..</strong> – volta uma pasta
+                            </div>
+                            <div class="command-example">
+                                <strong>cd ~</strong> – vai para a pasta home
+                            </div>
+                            <div class="command-example">
+                                <strong>pwd</strong> – mostra o caminho completo da pasta atual
+                            </div>
+                        </div>
+
+                        <div class="command-category">
+                            <h3>Listagem de Arquivos</h3>
+                            <div class="command-example">
+                                <strong>ls</strong> – lista arquivos e pastas
+                            </div>
+                            <div class="command-example">
+                                <strong>ls -l</strong> – lista com detalhes
+                            </div>
+                            <div class="command-example">
+                                <strong>ls -a</strong> – lista arquivos ocultos também
+                            </div>
+                            <div class="command-example">
+                                <strong>ls nome_da_pasta</strong> – lista o conteúdo de uma pasta
+                            </div>
+                        </div>
+
+                        <div class="command-category">
+                            <h3>Manipulação de Arquivos e Pastas</h3>
+                            <div class="command-example">
+                                <strong>mkdir nome_da_pasta</strong> – cria uma nova pasta
+                            </div>
+                            <div class="command-example">
+                                <strong>touch nome_do_arquivo</strong> – cria um arquivo vazio
+                            </div>
+                            <div class="command-example">
+                                <strong>rm nome_do_arquivo</strong> – remove arquivos
+                            </div>
+                            <div class="command-example">
+                                <strong>rm -r nome_da_pasta</strong> – exclui uma pasta
+                            </div>
+                            <div class="command-example">
+                                <strong>mv nome_atual_do_arquivo nome_novo_do_arquivo</strong> – renomeia um arquivo
+                            </div>
+                            <div class="command-example">
+                                <strong>mv nome_do_arquivo caminho_da_pasta/</strong> – move um arquivo para outra pasta
+                            </div>
+                            <div class="command-example">
+                                <strong>cp nome_do_arquivo caminho_da_pasta_de_destino/</strong> – copia um arquivo para outra pasta
+                            </div>
+                        </div>
+
+                        <div class="command-category">
+                            <h3>Outros Comandos Úteis</h3>
+                            <div class="command-example">
+                                <strong>clear</strong> – limpa o terminal
+                            </div>
+                            <div class="command-example">
+                                <strong>cat nome_do_arquivo</strong> – mostra o conteúdo de um arquivo
+                            </div>
+                            <div class="command-example">
+                                <strong>grep "texto" nome_do_arquivo</strong> – procura texto em arquivos
+                            </div>
+                            <div class="command-example">
+                                <strong>chmod +x nome_do_arquivo</strong> – torna um arquivo executável
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>Principais comandos Linux para usar o Git Bash</h2>
+                        <p>Estes são os comandos mais usados quando trabalhamos com Git Bash:</p>
+                        <ul>
+                            <li><code>ls</code> – lista arquivos e pastas</li>
+                            <li><code>cd</code> – navega entre pastas</li>
+                            <li><code>mkdir</code> – cria novas pastas</li>
+                            <li><code>rm</code> – remove arquivos e pastas</li>
+                            <li><code>clear</code> – limpa o terminal</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>Exemplos Práticos de Uso</h2>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Navegar para uma pasta de projetos</strong>
+                                <div class="command-example">
+                                    cd Documents/projetos<br>
+                                    ls
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Criar uma nova pasta para um projeto</strong>
+                                <div class="command-example">
+                                    mkdir meu-novo-projeto<br>
+                                    cd meu-novo-projeto
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Criar arquivos HTML e CSS</strong>
+                                <div class="command-example">
+                                    touch index.html<br>
+                                    touch style.css<br>
+                                    ls
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <strong>Inicializar um repositório Git</strong>
+                                <div class="command-example">
+                                    git init<br>
+                                    git add .<br>
+                                    git commit -m "Primeiro commit"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <h3>Dicas para Trabalhar com Terminal</h3>
+                        
+                        <div class="step">
+                            <div class="step-number">💡</div>
+                            <div>
+                                <strong>Auto-complete</strong>
+                                <p>Pressione <kbd>Tab</kbd> para auto-completar nomes de arquivos e pastas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">💡</div>
+                            <div>
+                                <strong>Histórico de Comandos</strong>
+                                <p>Use as setas <kbd>↑</kbd> e <kbd>↓</kbd> para navegar no histórico de comandos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">💡</div>
+                            <div>
+                                <strong>Interromper Processos</strong>
+                                <p>Pressione <kbd>Ctrl</kbd> + <kbd>C</kbd> para interromper um processo em execução</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">💡</div>
+                            <div>
+                                <strong>Limpar Terminal</strong>
+                                <p>Use <code>clear</code> ou <kbd>Ctrl</kbd> + <kbd>L</kbd> para limpar a tela do terminal</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3>Comandos de Ajuda</h3>
+                        <div class="command-example">
+                            man comando<br>
+                            # Mostra manual do comando
+                        </div>
+                        <div class="command-example">
+                            comando --help<br>
+                            # Mostra ajuda rápida
+                        </div>
+                        <div class="command-example">
+                            whatis comando<br>
+                            # Breve descrição do comando
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Comandos para Visualização</h3>
+                        <div class="command-example">
+                            cat arquivo.txt<br>
+                            # Mostra conteúdo completo
+                        </div>
+                        <div class="command-example">
+                            less arquivo.txt<br>
+                            # Mostra conteúdo paginado
+                        </div>
+                        <div class="command-example">
+                            head -n 10 arquivo.txt<br>
+                            # Mostra primeiras 10 linhas
+                        </div>
+                        <div class="command-example">
+                            tail -n 10 arquivo.txt<br>
+                            # Mostra últimas 10 linhas
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Guia Web</h3>
+                    <p>Compilado completo de conceitos de desenvolvimento web.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Navegação</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="git.html">Git</a></li>
+                        <li><a href="linux.html">Linux</a></li>
+                        <li><a href="hospedagem.html">Hospedagem</a></li>
+                        <li><a href="https-dns.html">HTTPS & DNS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-user"></i> Luiza Vittória Cardoso</li>
+                        <li><i class="fas fa-laptop-code"></i> Desenvolvimento Web</li>
+                        <li><i class="fas fa-calendar-alt"></i> 2025</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Guia de Desenvolvimento Web. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

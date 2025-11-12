@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git e GitHub - Guia Web</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Segoe+UI:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A148C;
+            --primary-light: #7B1FA2;
+            --primary-dark: #38006B;
+            --secondary: #E1BEE7;
+            --accent: #AA00FF;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --background: #FAFAFA;
+            --surface: #FFFFFF;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --border: #E0E0E0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            border-radius: 2px;
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        /* Navegação */
+        header {
+            background-color: var(--surface);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin-bottom: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-hero h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .page-hero p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+        
+        /* Conteúdo */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .content-card {
+            background-color: var(--surface);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .command-example {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(to right, #002B36, #320050);
+            color: #ffffff;
+        }
+
+        .accordion-body {
+            background-color: #1a1a1a;
+            border-left: 4px solid;
+            border-image: linear-gradient(to bottom, #00CFFF, #6D00B0) 1;
+            color: #ffffff;
+        }
+        
+        /* Rodapé */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="logo" href="index.html">
+                    <i class="fas fa-code"></i>
+                    Guia Web
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto nav-links">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="git.html">Git</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="linux.html">Linux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="hospedagem.html">Hospedagem</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https-dns.html">HTTPS & DNS</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1><i class="fab fa-git-alt"></i> Git e GitHub</h1>
+                <p>Controle de versão e colaboração em projetos de desenvolvimento</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdo -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-header">
+                        <h2>O que é Git?</h2>
+                    </div>
+                    
+                    <div class="content-card">
+                        <p><strong>Git é um sistema que ajuda a controlar as versões dos arquivos.</strong> Ele permite que várias pessoas trabalhem juntas em projetos de software, mantendo o histórico de todas as alterações realizadas.</p>
+                        
+                        <h3>O que é o GitHub</h3>
+                        <p><strong>GitHub é uma plataforma online que armazena projetos que usam Git.</strong> Ela facilita a colaboração e o armazenamento de código, permitindo que desenvolvedores trabalhem juntos em projetos de qualquer lugar do mundo.</p>
+                        
+                        <h3>Diferenças entre Git e GitHub</h3>
+                        <p><strong>Git:</strong> É uma ferramenta que você usa no seu computador para gerenciar versões.<br>
+                        <strong>GitHub:</strong> É um site que armazena repositórios Git e ajuda na colaboração.</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h2>Comandos Git Essenciais</h2>
+                        
+                        <div class="command-example">
+                            <strong>git init</strong> – começa um novo repositório
+                        </div>
+                        
+                        <div class="command-example">
+                            <strong>git status</strong> – verifica o estado do repositório
+                        </div>
+                        
+                        <div class="command-example">
+                            <strong>git add</strong> – adiciona arquivos para serem salvos
+                        </div>
+                        
+                        <div class="command-example">
+                            <strong>git commit -m "mensagem"</strong> – salva as mudanças feitas
+                        </div>
+                        
+                        <div class="command-example">
+                            <strong>git push</strong> – envia as alterações para o GitHub
+                        </div>
+
+                        <div class="command-example">
+                            <strong>git pull</strong> – baixa as atualizações do repositório remoto
+                        </div>
+
+                        <div class="command-example">
+                            <strong>git clone [url]</strong> – baixa um repositório existente
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h2>Como criar um repositório no GitHub</h2>
+                        <p>Para criar um repositório, vá para o GitHub, clique em <strong>New Repository</strong>, preencha o nome e a descrição, e clique em <strong>Create Repository</strong>.</p>
+                        
+                        <h3>Como conectar um projeto existente da máquina ao GitHub</h3>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>Abra o projeto no terminal</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>Use <code>git init</code> para iniciar o repositório</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>Conecte ao GitHub com <code>git remote add origin &lt;link_do_repositório&gt;</code></div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>Adicione arquivos e faça o primeiro commit</div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>Como criar uma versão com Git</h2>
+                        <p>Use os comandos:</p>
+                        <div class="command-example">
+                            git add . – adiciona todos os arquivos para serem salvos<br>
+                            git commit -m "mensagem" – cria uma nova versão do projeto
+                        </div>
+                        
+                        <h3>Como enviar da máquina para o GitHub</h3>
+                        <p>Após fazer o commit, use: <br>
+                        <code>git push origin main</code><br>
+                        (ou o nome da sua branch).</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <h3>Fluxo de Trabalho Básico</h3>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Inicializar repositório</strong>
+                                <div class="command-example">git init</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Adicionar arquivos</strong>
+                                <div class="command-example">git add .</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Fazer commit</strong>
+                                <div class="command-example">git commit -m "mensagem"</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <strong>Conectar ao GitHub</strong>
+                                <div class="command-example">git remote add origin [url]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div>
+                                <strong>Enviar para o GitHub</strong>
+                                <div class="command-example">git push -u origin main</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3>Dicas Importantes</h3>
+                        <ul>
+                            <li>Commite frequentemente com mensagens claras e descritivas</li>
+                            <li>Use branches para desenvolver novas funcionalidades</li>
+                            <li>Sempre faça <code>git pull</code> antes do <code>git push</code></li>
+                            <li>Resolva conflitos de merge com atenção</li>
+                            <li>Use <code>.gitignore</code> para arquivos desnecessários</li>
+                            <li>Mantenha seu repositório organizado e com histórico limpo</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Comandos Úteis para Troubleshooting</h3>
+                        <div class="command-example">
+                            git log --oneline<br>
+                            # Mostra histórico compacto
+                        </div>
+                        <div class="command-example">
+                            git diff<br>
+                            # Mostra diferenças não commitadas
+                        </div>
+                        <div class="command-example">
+                            git reset --hard HEAD<br>
+                            # Desfaz todas as mudanças não commitadas
+                        </div>
+                        <div class="command-example">
+                            git branch<br>
+                            # Lista todas as branches
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Guia Web</h3>
+                    <p>Compilado completo de conceitos de desenvolvimento web.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Navegação</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="git.html">Git</a></li>
+                        <li><a href="linux.html">Linux</a></li>
+                        <li><a href="hospedagem.html">Hospedagem</a></li>
+                        <li><a href="https-dns.html">HTTPS & DNS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-user"></i> Luiza Vittória Cardoso</li>
+                        <li><i class="fas fa-laptop-code"></i> Desenvolvimento Web</li>
+                        <li><i class="fas fa-calendar-alt"></i> 2025</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Guia de Desenvolvimento Web. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
