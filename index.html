@@ -3,372 +3,681 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia de Desenvolvimento Web - Luiza Vittória</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>BikeHub Sustentável | Energia Limpa através do Ciclismo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Segoe+UI:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4A148C;
-            --primary-light: #7B1FA2;
-            --primary-dark: #38006B;
-            --secondary: #E1BEE7;
-            --accent: #AA00FF;
-            --text-dark: #212121;
-            --text-light: #757575;
-            --background: #FAFAFA;
-            --surface: #FFFFFF;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --error: #F44336;
-            --border: #E0E0E0;
-            --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
-        
-        html {
-            scroll-behavior: smooth;
+
+        :root {
+            --primary: #D32F2F;
+            --primary-dark: #B71C1C;
+            --primary-light: #EF5350;
+            --secondary: #FF5722;
+            --accent: #FF9800;
+            --dark: #1A1A1A;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        
+
         body {
-            background-color: var(--background);
-            color: var(--text-dark);
+            background-color: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            font-size: 16px;
-            font-weight: 400;
+            overflow-x: hidden;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 1rem;
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        
-        h1 {
-            font-size: 2.5rem;
-        }
-        
-        h2 {
-            font-size: 2rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-light), var(--primary));
-            border-radius: 2px;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .section-header h2::after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        /* Navegação */
+
+        /* Header */
         header {
-            background-color: var(--surface);
-            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .logo {
             display: flex;
             align-items: center;
+            gap: 12px;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
         }
-        
+
         .logo i {
-            margin-right: 0.5rem;
+            color: var(--accent);
             font-size: 1.8rem;
         }
-        
-        .nav-links {
+
+        nav ul {
             display: flex;
             list-style: none;
-            margin-bottom: 0;
+            gap: 2rem;
         }
-        
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--text-dark);
+
+        nav a {
+            color: var(--white);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
+            transition: var(--transition);
             padding: 0.5rem 0;
+            position: relative;
         }
-        
-        .nav-links a::after {
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s;
+            background-color: var(--accent);
+            transition: var(--transition);
         }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a:hover::after {
+
+        nav a:hover::after {
             width: 100%;
         }
-        
-        .nav-links a.active {
-            color: var(--primary);
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
-        
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            color: white;
-            padding: 6rem 0;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 8rem 0;
+            text-align: center;
         }
-        
-        .hero::before {
-            content: "";
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Problem Section */
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: var(--white);
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .solution-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .solution-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* How It Works */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 4rem 0;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-light);
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .flow-diagram {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 3rem;
+        }
+
+        .flow-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .flow-item {
+            text-align: center;
+            padding: 1rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .flow-item .icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .arrow {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Calculator */
+        .calculator {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2);
+        }
+
+        .result {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: none;
+            border-left: 4px solid var(--primary);
+        }
+
+        .result h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Impact Section */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .impact-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .impact-card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Curiosities */
+        .curiosities {
+            background: linear-gradient(135deg, var(--primary-dark), var(--dark));
+            color: var(--white);
+        }
+
+        .curiosity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .curiosity-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .curiosity-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .gallery-item::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-            background-size: cover;
-        }
-        
-        .hero-content {
-            position: relative;
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
-        
-        .hero h1 {
-            color: white;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .hero p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(170, 0, 255, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(170, 0, 255, 0.4);
-            color: white;
-        }
-        
-        .btn i {
-            margin-left: 0.5rem;
-        }
-        
-        /* Seções */
-        section {
-            padding: 5rem 0;
-        }
-        
-        /* Cards */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: var(--surface);
-            border-radius: 8px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
+
+        .gallery-item span {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            border-top: 4px solid var(--primary);
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            padding: 0 1rem;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-            color: inherit;
-            text-decoration: none;
+
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
-        
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 1.8rem;
+
+        /* IMAGENS DA GALERIA */
+        .gallery-item:nth-child(1) {
+            background-image: url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
         }
-        
-        /* Rodapé */
+
+        .gallery-item:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1507038772120-7fff76f79d79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80');
+        }
+
+        .gallery-item:nth-child(3) {
+            background-image: url('bike.jpg');
+        }
+
+        .gallery-item:nth-child(4) {
+            background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80');
+        }
+
+        /* Footer */
         footer {
-            background-color: var(--primary-dark);
-            color: white;
+            background-color: var(--dark);
+            color: var(--white);
             padding: 4rem 0 2rem;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-bottom: 3rem;
         }
-        
-        .footer-section h3 {
-            color: white;
+
+        .footer-column h3 {
+            font-size: 1.3rem;
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            color: var(--accent);
         }
-        
-        .footer-section p, .footer-section li {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
+
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 1rem;
+            display: block;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
         }
-        
-        .footer-section a:hover {
-            color: white;
+
+        .footer-column a:hover {
+            color: var(--accent);
         }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
             text-align: center;
-            color: rgba(255, 255, 255, 0.5);
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
             font-size: 0.9rem;
         }
-        
-        /* Animações */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .solution-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .steps::before {
+                display: none;
+            }
+
+            .flow-items {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
         }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
-        
-        /* Responsividade */
+
         @media (max-width: 768px) {
-            .nav-links {
+            nav ul {
                 display: none;
             }
             
-            .hero h1 {
-                font-size: 2.2rem;
+            .mobile-menu {
+                display: block;
             }
             
-            section {
-                padding: 3rem 0;
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Cabeçalho -->
+    <!-- Header -->
     <header>
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="logo" href="index.html">
-                    <i class="fas fa-code"></i>
-                    Guia Web
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto nav-links">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Início</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="git.html">Git</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="linux.html">Linux</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="hospedagem.html">Hospedagem</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https-dns.html">HTTPS & DNS</a>
-                        </li>
-                    </ul>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bicycle"></i>
+                    <span>BikeHub Sustentável</span>
                 </div>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a href="#problema">Problema</a></li>
+                        <li><a href="#solucao">Solução</a></li>
+                        <li><a href="#funcionamento">Como Funciona</a></li>
+                        <li><a href="#calculadora">Calculadora</a></li>
+                        <li><a href="#impacto">Impacto</a></li>
+                        <li><a href="#curiosidades">Curiosidades</a></li>
+                        <li><a href="#galeria">Galeria</a></li>
+                    </ul>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -376,170 +685,392 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="row align-items-center">
-                    <div class="col-lg-8">
-                        <h1>Guia Completo de Desenvolvimento Web</h1>
-                        <p>Revisando todo o conteúdo visto na unidade curricular - Desenvolvimento Web</p>
-                        <a href="#topicos" class="btn">
-                            Explorar Conteúdos
-                            <i class="fas fa-arrow-down"></i>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 text-center">
-                        <div class="feature-icon" style="width: 120px; height: 120px;">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                    </div>
-                </div>
+                <h1>Transformando Pedaladas em Energia Limpa</h1>
+                <p>Uma solução inovadora que combina exercício físico com geração de energia sustentável para comunidades, escolas e espaços públicos.</p>
+                <a href="#solucao" class="btn">Conheça Nossa Solução</a>
+                <a href="#calculadora" class="btn btn-outline">Calcular Energia Gerada</a>
             </div>
         </div>
     </section>
 
-    <!-- Tópicos -->
-    <section id="topicos">
+    <!-- Problem Section -->
+    <section id="problema">
         <div class="container">
-            <div class="section-header">
-                <h2>Conteúdos da Unidade Curricular</h2>
-                <p class="section-subtitle">Todos os tópicos estudados durante o período</p>
+            <div class="section-title">
+                <h2>O Problema Energético Global</h2>
+                <p>A crise energética mundial afeta especialmente comunidades vulneráveis, limitando acesso à educação, saúde e desenvolvimento</p>
             </div>
-            
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="git.html" class="feature-card fade-in">
-                        <div class="feature-icon">
-                            <i class="fab fa-git-alt"></i>
-                        </div>
-                        <h3>Git e GitHub</h3>
-                        <p>Controle de versão, comandos essenciais, criação de repositórios e trabalho colaborativo.</p>
-                    </a>
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Custos Elevados de Energia</h3>
+                    <p>Segundo a Agência Internacional de Energia, mais de 759 milhões de pessoas no mundo não têm acesso à eletricidade, e comunidades carentes gastam até 30% de sua renda com energia.</p>
                 </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="linux.html" class="feature-card fade-in">
-                        <div class="feature-icon">
-                            <i class="fab fa-linux"></i>
-                        </div>
-                        <h3>Comandos Linux</h3>
-                        <p>Comandos essenciais do terminal, navegação no sistema de arquivos e operações básicas.</p>
-                    </a>
+                <div class="problem-card">
+                    <i class="fas fa-industry"></i>
+                    <h3>Dependência de Combustíveis Fósseis</h3>
+                    <p>Mais de 80% da energia global ainda vem de fontes não renováveis, contribuindo para 73% das emissões de gases de efeito estufa e acelerando as mudanças climáticas.</p>
                 </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="hospedagem.html" class="feature-card fade-in">
-                        <div class="feature-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <h3>Hospedagem Web</h3>
-                        <p>Como publicar sites estáticos usando GitHub Pages, Vercel, Netlify e Render.</p>
-                    </a>
-                </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="https-dns.html" class="feature-card fade-in">
-                        <div class="feature-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <h3>HTTPS & DNS</h3>
-                        <p>Entendendo segurança web, certificados SSL e o sistema de nomes de domínio.</p>
-                    </a>
+                <div class="problem-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Desigualdade no Acesso</h3>
+                    <p>Na América Latina, 16 milhões de pessoas não têm acesso à eletricidade, principalmente em áreas rurais e periferias urbanas, limitando oportunidades de desenvolvimento.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sobre -->
-    <section class="bg-light">
+    <!-- Solution Section -->
+    <section id="solucao" class="solution">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h2>Sobre este Projeto</h2>
-                    <p>Este site foi desenvolvido para revisar todo o conteúdo visto na unidade curricular de Desenvolvimento Web, demonstrando a aplicação prática dos conceitos aprendidos.</p>
-                    <p>O projeto reúne três sites completos desenvolvidos durante o período e uma apresentação sobre hospedagem web, organizados de forma clara e acessível.</p>
-                    <p><strong>Aluna:</strong> Luiza Vittória Cardoso</p>
+            <div class="solution-content">
+                <div class="solution-text">
+                    <h2>Nossa Solução Inovadora</h2>
+                    <p>O <strong>BikeHub Sustentável</strong> transforma bicicletas estacionárias em miniusinas de energia limpa e acessível. Utilizando princípios de eletromagnetismo, convertemos energia mecânica em elétrica através de um sistema eficiente e de baixo custo.</p>
+                    <p>Cada bicicleta adaptada pode gerar entre 50-150 watts por hora de pedalada, dependendo da intensidade do exercício. Essa energia é armazenada em baterias de lítio e distribuída para carregar dispositivos móveis, iluminar ambientes e alimentar equipamentos educacionais.</p>
+                    <p>Nosso sistema híbrido combina geração humana com painéis solares fotovoltaicos, garantindo fornecimento contínuo mesmo quando as bicicletas não estão em uso.</p>
+                    <a href="#funcionamento" class="btn">Entenda o Funcionamento</a>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <div class="feature-icon" style="width: 100px; height: 100px; margin-bottom: 2rem;">
-                        <i class="fas fa-graduation-cap"></i>
+                <div class="solution-image"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="funcionamento">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como o Sistema Funciona</h2>
+                <p>Um processo eficiente baseado em princípios físicos comprovados para geração de energia limpa</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Pedalada Humana</h3>
+                    <p>O usuário pedala normalmente, convertendo energia química do corpo em energia mecânica através do movimento circular.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Conversão Eletromecânica</h3>
+                    <p>Um dínamo ou gerador DC acoplado à roda transforma o movimento rotacional em energia elétrica através da indução eletromagnética.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Regulação e Controle</h3>
+                    <p>Um controlador de carga regula a voltagem e corrente, protegendo as baterias e otimizando o processo de carregamento.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Armazenamento em Baterias</h3>
+                    <p>Baterias recarregáveis de lítio ou chumbo-ácido armazenam a energia para uso posterior, com capacidade de 12V a 48V.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Distribuição Inteligente</h3>
+                    <p>Inversores convertem a energia DC para AC, permitindo alimentar LEDs, tomadas USB, computadores e outros dispositivos.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Fluxo de Energia do Sistema</h3>
+                <div class="flow-items">
+                    <div class="flow-item">
+                        <div class="icon">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h4>Pedalada</h4>
+                        <p>Energia Mecânica</p>
                     </div>
-                    <h3>Objetivos do Projeto</h3>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-check text-success me-2"></i> Revisar conceitos fundamentais</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Demonstrar aplicação prática</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Organizar conteúdo aprendido</li>
-                        <li><i class="fas fa-check text-success me-2"></i> Criar portfólio de projetos</li>
-                    </ul>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-item">
+                        <div class="icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <h4>Gerador DC</h4>
+                        <p>Conversão</p>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-item">
+                        <div class="icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h4>Controlador</h4>
+                        <p>Regulação</p>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-item">
+                        <div class="icon">
+                            <i class="fas fa-battery-full"></i>
+                        </div>
+                        <h4>Bateria</h4>
+                        <p>Armazenamento</p>
+                    </div>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flow-item">
+                        <div class="icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <h4>Saída</h4>
+                        <p>Distribuição</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Rodapé -->
+    <!-- Calculator -->
+    <section id="calculadora">
+        <div class="container">
+            <div class="section-title">
+                <h2>Calculadora de Energia Gerada</h2>
+                <p>Descubra quanta energia você pode produzir e seu impacto ambiental</p>
+            </div>
+            <div class="calculator">
+                <h3>Simule sua geração de energia</h3>
+                <div class="input-group">
+                    <label for="minutes">Minutos de pedalada:</label>
+                    <input type="number" id="minutes" placeholder="Digite os minutos" min="1" max="1000">
+                </div>
+                <div class="input-group">
+                    <label for="intensity">Intensidade do exercício:</label>
+                    <select id="intensity" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 8px;">
+                        <option value="50">Leve (50W)</option>
+                        <option value="100" selected>Moderada (100W)</option>
+                        <option value="150">Intensa (150W)</option>
+                    </select>
+                </div>
+                <button class="btn" id="calculate" style="width: 100%;">
+                    <i class="fas fa-bolt"></i> Calcular Energia Gerada
+                </button>
+                <div class="result" id="result">
+                    <h4>Resultado da Simulação</h4>
+                    <p id="energy-output"></p>
+                    <p id="equivalents"></p>
+                    <p id="environmental-impact"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impacto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Impacto Positivo Multidimensional</h2>
+                <p>Nossa solução gera benefícios em diversas áreas do desenvolvimento sustentável</p>
+            </div>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Educação Inclusiva</h3>
+                    <p>Permite estudos noturnos em comunidades sem acesso à rede elétrica, impactando positivamente o desempenho escolar de milhares de estudantes.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h3>Economia Circular</h3>
+                    <p>Reduz em até 40% os gastos com energia em escolas públicas e centros comunitários, liberando recursos para outras necessidades.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustentabilidade Ambiental</h3>
+                    <p>Cada hora de pedalada evita a emissão de aproximadamente 0.5kg de CO₂ equivalente, contribuindo para a mitigação das mudanças climáticas.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Empoderamento Comunitário</h3>
+                    <p>Fomenta a colaboração coletiva e fortalece o senso de comunidade através de projetos de geração compartilhada de energia.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Saúde Preventiva</h3>
+                    <p>Combate o sedentarismo, reduzindo riscos de doenças cardiovasculares, diabetes e obesidade enquanto gera energia limpa.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Capacitação Tecnológica</h3>
+                    <p>Oferece workshops sobre energias renováveis, preparando jovens para carreiras no setor de sustentabilidade e tecnologia verde.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curiosities -->
+    <section id="curiosidades" class="curiosidades">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">Curiosidades e Dados Técnicos</h2>
+                <p style="color: #ccc;">Informações fascinantes sobre geração de energia através do ciclismo</p>
+            </div>
+            <div class="curiosity-cards">
+                <div class="curiosity-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Eficiência Energética</h3>
+                    <p>O corpo humano tem eficiência de aproximadamente 25% na conversão de energia alimentar em trabalho mecânico. Um ciclista em boa forma pode sustentar 100-150W por várias horas.</p>
+                </div>
+                <div class="curiosity-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Equivalências Práticas</h3>
+                    <p>30 minutos de pedalada moderada geram energia suficiente para carregar 5 smartphones ou manter uma lâmpada LED de 10W acesa por 8 horas completas.</p>
+                </div>
+                <div class="curiosity-card">
+                    <i class="fas fa-solar-panel"></i>
+                    <h3>Sistema Híbrido</h3>
+                    <p>Quando combinado com painéis solares de 200W, o sistema pode gerar até 2.5 kWh por dia - suficiente para alimentar um pequeno laboratório de informática por 4 horas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="galeria">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeria de Implementações</h2>
+                <p>Conheça nossas instalações e o impacto real em comunidades</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <span>Bicicleta Adaptada com Gerador DC</span>
+                </div>
+                <div class="gallery-item">
+                    <span>Estação Comunitária com Múltiplas Bikes</span>
+                </div>
+                <div class="gallery-item">
+                    <span>Comunidade Utilizando Energia Gerada</span>
+                </div>
+                <div class="gallery-item">
+                    <span>Sistema Híbrido com Painéis Solares</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Guia Web</h3>
-                    <p>Compilado completo de conceitos de desenvolvimento web aprendidos durante a unidade curricular.</p>
+                <div class="footer-column">
+                    <h3>BikeHub Sustentável</h3>
+                    <p>Transformando pedaladas em energia limpa para um futuro mais sustentável, justo e acessível para todas as comunidades.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Navegação</h3>
-                    <ul>
-                        <li><a href="index.html">Início</a></li>
-                        <li><a href="git.html">Git</a></li>
-                        <li><a href="linux.html">Linux</a></li>
-                        <li><a href="hospedagem.html">Hospedagem</a></li>
-                        <li><a href="https-dns.html">HTTPS & DNS</a></li>
-                    </ul>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <a href="#problema">Problema Energético</a>
+                    <a href="#solucao">Nossa Solução</a>
+                    <a href="#funcionamento">Como Funciona</a>
+                    <a href="#calculadora">Calculadora</a>
+                    <a href="#impacto">Impacto Positivo</a>
+                    <a href="#curiosidades">Curiosidades</a>
                 </div>
-                <div class="footer-section">
+                <div class="footer-column">
+                    <h3>Dados Técnicos</h3>
+                    <p><i class="fas fa-bolt"></i> 1h de pedalada = 100 Wh</p>
+                    <p><i class="fas fa-mobile-alt"></i> Carga para 10 celulares</p>
+                    <p><i class="fas fa-lightbulb"></i> 8h de iluminação LED</p>
+                    <p><i class="fas fa-users"></i> 10 pessoas = Laboratório escolar</p>
+                </div>
+                <div class="footer-column">
                     <h3>Contato</h3>
-                    <ul>
-                        <li><i class="fas fa-user"></i> Luiza Vittória Cardoso</li>
-                        <li><i class="fas fa-laptop-code"></i> Desenvolvimento Web</li>
-                        <li><i class="fas fa-calendar-alt"></i> 2025</li>
-                    </ul>
+                    <p><i class="fas fa-envelope"></i> contato@bikehub.org</p>
+                    <p><i class="fas fa-phone"></i> (11) 9999-8888</p>
+                    <p><i class="fas fa-map-marker-alt"></i> São Paulo, Brasil</p>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Guia de Desenvolvimento Web. Todos os direitos reservados.</p>
+            <div class="copyright">
+                <p>Projeto Integrador - 1º Ano Informática | Rafael de Oliveira</p>
+                <p>BikeHub Sustentável &copy; 2023 - Todos os direitos reservados</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Ativar link de navegação ativo
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage || (currentPage === '' && link.getAttribute('href') === 'index.html')) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const nav = document.querySelector('nav ul');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
+        });
+
+        // Calculator Functionality
+        document.getElementById('calculate').addEventListener('click', function() {
+            const minutes = parseInt(document.getElementById('minutes').value);
+            const intensity = parseInt(document.getElementById('intensity').value);
             
-            // Animações de entrada
-            const fadeElements = document.querySelectorAll('.fade-in');
+            if (isNaN(minutes) || minutes <= 0) {
+                alert('Por favor, insira um número válido de minutos.');
+                return;
+            }
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
+            // Calculation: intensity watts per hour, so (minutes/60) * intensity
+            const energyWh = (minutes / 60) * intensity;
             
-            fadeElements.forEach(element => {
-                element.style.opacity = 0;
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                observer.observe(element);
+            // Equivalences
+            const phones = Math.floor(energyWh / 10); // 10Wh per phone
+            const ledHours = (energyWh / 10).toFixed(1); // 10W LED
+            const co2Reduction = (energyWh * 0.0005).toFixed(3); // kg CO2 equivalent
+            
+            document.getElementById('energy-output').textContent = 
+                `Energia Gerada: ${energyWh.toFixed(2)} Watt-hora (Wh)`;
+                
+            document.getElementById('equivalents').textContent = 
+                `Equivalente a: Carregar ${phones} smartphones ou manter lâmpada LED acesa por ${ledHours} horas`;
+                
+            document.getElementById('environmental-impact').textContent = 
+                `Impacto Ambiental: Redução de ${co2Reduction} kg de CO₂ equivalente`;
+                
+            document.getElementById('result').style.display = 'block';
+        });
+
+        // Add animation on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight * 0.85) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
             });
         });
+
+        // Initialize sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+
+        // Trigger initial animation
+        window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
 </html>
